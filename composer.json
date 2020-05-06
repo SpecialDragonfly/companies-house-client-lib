@@ -1,0 +1,18 @@
+{
+    "name": "dominic/companies_house",
+    "description": "Client library for Companies House API",
+    "license": "proprietary",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Dominic Orme",
+            "email": "dominic.orme@googlemail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "CH\\": "src/"
+        }
+    },
+    "require": {}
+}

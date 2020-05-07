@@ -2,6 +2,7 @@
 namespace CH\UseCase\RegisteredOffice;
 
 use CH\Service;
+use CH\UseCase\RegisteredOffice\Domain\Address;
 
 class RegisteredOfficeService
 {
@@ -15,8 +16,8 @@ class RegisteredOfficeService
         $this->service = $service;
     }
 
-    public function getAddress(string $companyNumber)
+    public function getAddress(string $companyNumber) : Address
     {
-        $this->service->send('/company/'.$companyNumber.'/registered-office-address', []);
+        return new Address($this->service->send('/company/'.$companyNumber.'/registered-office-address', []));
     }
 }

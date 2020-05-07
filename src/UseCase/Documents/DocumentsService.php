@@ -2,6 +2,7 @@
 namespace CH\UseCase\Documents;
 
 use CH\Service;
+use CH\UseCase\Documents\Domain\DocumentMetaData;
 
 class DocumentsService
 {
@@ -15,13 +16,13 @@ class DocumentsService
         $this->service = $service;
     }
 
-    public function getDocument() : string
+    public function getDocument(string $id) : string
     {
-        $this->service->send('/document/{id}/content', []);
+        return $this->service->send('/document/'.$id.'/content', []);
     }
 
-    public function getMetaData()
+    public function getMetaData(string $id) : DocumentMetaData
     {
-        $this->service->send('/document/{id}', []);
+        return new DocumentMetaData($this->service->send('/document/'.$id, []));
     }
 }

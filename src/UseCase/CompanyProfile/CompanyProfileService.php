@@ -2,6 +2,7 @@
 namespace CH\UseCase;
 
 use CH\Service;
+use CH\UseCase\CompanyProfile\Domain\CompanyProfile;
 
 class CompanyProfileService
 {
@@ -15,8 +16,8 @@ class CompanyProfileService
         $this->service = $service;
     }
 
-    public function get(string $companyNumber)
+    public function get(string $companyNumber) : CompanyProfile
     {
-        $this->service->send('/company/'.$companyNumber, []);
+        return new CompanyProfile($this->service->send('/company/'.$companyNumber, []));
     }
 }

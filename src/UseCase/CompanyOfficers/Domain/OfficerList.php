@@ -4,64 +4,67 @@ namespace CH\UseCase\CompanyOfficers\Domain;
 
 class OfficerList
 {
-/*
-{
-   "active_count" : "integer",
-   "etag" : "string",
-   "inactive_count" : "integer",
-   "items" : [
-      {
-         "address" : {
-            "address_line_1" : "string",
-            "address_line_2" : "string",
-            "care_of" : "string",
-            "country" : "string",
-            "locality" : "string",
-            "po_box" : "string",
-            "postal_code" : "string",
-            "premises" : "string",
-            "region" : "string"
-         },
-         "appointed_on" : "date",
-         "country_of_residence" : "string",
-         "date_of_birth" : {
-            "day" : "integer",
-            "month" : "integer",
-            "year" : "integer"
-         },
-         "former_names" : [
-            {
-               "forenames" : "string",
-               "surname" : "string"
-            }
-         ],
-         "identification" : {
-            "identification_type" : "string",
-            "legal_authority" : "string",
-            "legal_form" : "string",
-            "place_registered" : "string",
-            "registration_number" : "string"
-         },
-         "links" : {
-            "officer" : {
-               "appointments" : "string"
-            }
-         },
-         "name" : "string",
-         "nationality" : "string",
-         "occupation" : "string",
-         "officer_role" : "string",
-         "resigned_on" : "date"
-      }
-   ],
-   "items_per_page" : "integer",
-   "kind" : "string",
-   "links" : {
-      "self" : "string"
-   },
-   "resigned_count" : "integer",
-   "start_index" : "integer",
-   "total_results" : "integer"
-}
- */
+    /**
+     * @var int
+     */
+    private $totalResults;
+    /**
+     * @var int
+     */
+    private $startIndex;
+    /**
+     * @var int
+     */
+    private $resignedCount;
+    /**
+     * @var mixed
+     */
+    private $links;
+    /**
+     * @var mixed
+     */
+    private $kind;
+    /**
+     * @var int
+     */
+    private $itemsPerPage;
+    /**
+     * @var int
+     */
+    private $inactiveCount;
+    /**
+     * @var mixed
+     */
+    private $etag;
+    /**
+     * @var int
+     */
+    private $activeCount;
+    /**
+     * @var Person[]
+     */
+    private $people;
+
+    public function __construct(array $jsonResults)
+    {
+        $this->activeCount = (int) $jsonResults['active_count'];
+        $this->etag = $jsonResults['etag'];
+        $this->inactiveCount = (int) $jsonResults['inactive_count'];
+        $this->itemsPerPage = (int) $jsonResults['items_per_page'];
+        $this->kind = $jsonResults['kind'];
+        $this->links = $jsonResults['links'];
+        $this->resignedCount = (int) $jsonResults['resignedCount'];
+        $this->startIndex = (int) $jsonResults['start_index'];
+        $this->totalResults = (int) $jsonResults['total_results'];
+        $this->people = $this->getPeople($jsonResults['items']);
+    }
+
+    private function getPeople($items)
+    {
+        $people = [];
+        foreach ($items as $item) {
+            $people[] = new Person($item);
+        }
+        return $people;
+    }
 }

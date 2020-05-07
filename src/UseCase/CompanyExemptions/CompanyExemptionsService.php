@@ -11,13 +11,18 @@ class CompanyExemptionsService
      */
     private $service;
 
+    /**
+     * CompanyExemptionsService constructor.
+     * @param Service $service
+     */
     public function __construct(Service $service)
     {
         $this->service = $service;
     }
 
-    public function get() : CompanyExemptions
+    public function get(string $companyNumber) : CompanyExemptions
     {
-        $this->service->send('/company/{company_number}/exemptions', []);
+        $result = $this->service->send('/company/'.$companyNumber.'/exemptions', []);
+        return new CompanyExemptions($result);
     }
 }

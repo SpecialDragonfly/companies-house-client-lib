@@ -35,6 +35,9 @@ final class Service
         if ($info === 429) {
             throw new \Exception("Too many requests within 5 minute period. Capped at 600.");
         }
+        if ($info !== 200) {
+            throw new \Exception($result, $info);
+        }
         $json = json_decode($result, true);
         if ($json === null) {
             throw new \Exception("Json Decode error: ".json_last_error_msg());

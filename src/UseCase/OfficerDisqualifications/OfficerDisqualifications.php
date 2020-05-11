@@ -2,6 +2,8 @@
 namespace CH\UseCase\OfficerDisqualifications;
 
 use CH\Service;
+use CH\UseCase\OfficerDisqualifications\Domain\CorporateDisqualification;
+use CH\UseCase\OfficerDisqualifications\Domain\NaturalDisqualification;
 
 class OfficerDisqualifications
 {
@@ -15,13 +17,18 @@ class OfficerDisqualifications
         $this->service = $service;
     }
 
-    public function getCorporate(string $officerId)
+    public function getCorporate(string $officerId) : CorporateDisqualification
     {
-        $this->service->send('/disqualified-officers/corporate/'.$officerId, []);
+        return new CorporateDisqualification(
+            $this->service->send(
+                '/disqualified-officers/corporate/' . $officerId,
+                []
+            )
+        );
     }
 
-    public function getNatural(string $officerId)
+    public function getNatural(string $officerId) : NaturalDisqualification
     {
-        $this->service->send('/disqualified-officers/natural/'.$officerId, []);
+        return new NaturalDisqualification($this->service->send('/disqualified-officers/natural/' . $officerId, []));
     }
 }

@@ -2,6 +2,7 @@
 namespace CH\UseCase\OfficerAppointment;
 
 use CH\Service;
+use CH\UseCase\OfficerAppointment\Domain\AppointmentList;
 
 class OfficerAppointmentService
 {
@@ -15,8 +16,13 @@ class OfficerAppointmentService
         $this->service = $service;
     }
 
-    public function list(string $officerId)
+    public function list(string $officerId) : AppointmentList
     {
-        $this->service->send('/officers/'.$officerId.'/appointments', ['items_per_page' => '', 'start_index' => '']);
+        return new AppointmentList(
+            $this->service->send(
+                '/officers/' . $officerId . '/appointments',
+                ['items_per_page' => '', 'start_index' => '']
+            )
+        );
     }
 }

@@ -1,20 +1,12 @@
 <?php
 namespace CH\UseCase\SignificantControl\Domain;
 
-class Statement
+class Significant
 {
     /**
-     * @var string
+     * @var string[]
      */
-    private $statement;
-    /**
-     * @var string
-     */
-    private $restrictionsNoticeWithdrawalReason;
-    /**
-     * @var string
-     */
-    private $notifiedOn;
+    private $naturesOfControl;
     /**
      * @var array<string, string>
      */
@@ -22,7 +14,11 @@ class Statement
     /**
      * @var string
      */
-    private $linkedPscName;
+    private $notifiedOn;
+    /**
+     * @var string
+     */
+    private $name;
     /**
      * @var string
      */
@@ -35,41 +31,29 @@ class Statement
      * @var string
      */
     private $ceasedOn;
+    /**
+     * @var Address
+     */
+    private $address;
 
     public function __construct(array $jsonResponse)
     {
+        $this->address = new Address($jsonResponse['address']);
         $this->ceasedOn = $jsonResponse['ceased_on'];
         $this->etag = $jsonResponse['etag'];
         $this->kind = $jsonResponse['kind'];
-        $this->linkedPscName = $jsonResponse['linked_psc_name'];
         $this->links = $jsonResponse['links'];
+        $this->name = $jsonResponse['name'];
+        $this->naturesOfControl = $jsonResponse['natures_of_control'];
         $this->notifiedOn = $jsonResponse['notified_on'];
-        $this->restrictionsNoticeWithdrawalReason = $jsonResponse['restrictions_notice_withdrawal_reason'];
-        $this->statement = $jsonResponse['statement'];
     }
 
     /**
-     * @return string
+     * @return string[]
      */
-    public function getStatement(): string
+    public function getNaturesOfControl(): array
     {
-        return $this->statement;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRestrictionsNoticeWithdrawalReason(): string
-    {
-        return $this->restrictionsNoticeWithdrawalReason;
-    }
-
-    /**
-     * @return string
-     */
-    public function getNotifiedOn(): string
-    {
-        return $this->notifiedOn;
+        return $this->naturesOfControl;
     }
 
     /**
@@ -83,9 +67,17 @@ class Statement
     /**
      * @return string
      */
-    public function getLinkedPscName(): string
+    public function getNotifiedOn(): string
     {
-        return $this->linkedPscName;
+        return $this->notifiedOn;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
     }
 
     /**
@@ -110,5 +102,13 @@ class Statement
     public function getCeasedOn(): string
     {
         return $this->ceasedOn;
+    }
+
+    /**
+     * @return Address
+     */
+    public function getAddress(): Address
+    {
+        return $this->address;
     }
 }

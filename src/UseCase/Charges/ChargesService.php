@@ -3,6 +3,8 @@
 namespace CH\UseCase\Charges;
 
 use CH\Service;
+use CH\UseCase\Charges\Domain\ChargeDetails;
+use CH\UseCase\Charges\Domain\ChargeList;
 
 class ChargesService
 {
@@ -16,13 +18,18 @@ class ChargesService
         $this->service = $service;
     }
 
-    public function get(string $companyNumber, string $chargeId)
+    public function get(string $companyNumber, string $chargeId) : ChargeDetails
     {
-        $this->service->send('/company/'.$companyNumber.'/charges/'.$chargeId, []);
+        return new ChargeDetails($this->service->send('/company/' . $companyNumber . '/charges/' . $chargeId, []));
     }
 
-    public function list(string $companyNumber, int $itemsPerPage, int $startIndex)
+    public function list(string $companyNumber, int $itemsPerPage, int $startIndex) : ChargeList
     {
-        $this->service->send('/company/'.$companyNumber.'/charges', ['items_per_page' => $itemsPerPage, 'start_index' => $startIndex]);
+        return new ChargeList(
+            $this->service->send(
+                '/company/' . $companyNumber . '/charges',
+                ['items_per_page' => $itemsPerPage, 'start_index' => $startIndex]
+            )
+        );
     }
 }

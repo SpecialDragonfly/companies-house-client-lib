@@ -29,7 +29,7 @@ class CompanyOfficersService
         ?string $orderBy,
         string $orderDirection = 'ascending',
         int $startIndex = 0
-    ) {
+    ) : OfficerList {
         $options = [
             'start_index' => $startIndex,
             'items_per_page' => $itemsPerPage

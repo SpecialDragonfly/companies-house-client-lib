@@ -3,81 +3,91 @@ namespace CH\UseCase\Charges\Domain;
 
 class ChargeList
 {
-/*
-{
-   "etag" : "string",
-   "items" : [
-      {
-         "acquired_on" : "date",
-         "assets_ceased_released" : "string",
-         "charge_code" : "string",
-         "charge_number" : "integer",
-         "classification" : {
-            "description" : "string",
-            "type" : "string"
-         },
-         "covering_instrument_date" : "date",
-         "created_on" : "date",
-         "delivered_on" : "date",
-         "etag" : "string",
-         "id" : "string",
-         "insolvency_cases" : [
-            {
-               "case_number" : "integer",
-               "links" : {
-                  "case" : "string"
-               },
-               "transaction_id" : "integer"
-            }
-         ],
-         "links" : {
-            "self" : "string"
-         },
-         "more_than_four_persons_entitled" : "boolean",
-         "particulars" : {
-            "chargor_acting_as_bare_trustee" : "boolean",
-            "contains_fixed_charge" : "boolean",
-            "contains_floating_charge" : "boolean",
-            "contains_negative_pledge" : "boolean",
-            "description" : "string",
-            "floating_charge_covers_all" : "boolean",
-            "type" : "string"
-         },
-         "persons_entitled" : [
-            {
-               "name" : "string"
-            }
-         ],
-         "resolved_on" : "date",
-         "satisfied_on" : "date",
-         "scottish_alterations" : {
-            "has_alterations_to_order" : "boolean",
-            "has_alterations_to_prohibitions" : "boolean",
-            "has_restricting_provisions" : "boolean"
-         },
-         "secured_details" : {
-            "description" : "string",
-            "type" : "string"
-         },
-         "status" : "string",
-         "transactions" : [
-            {
-               "delivered_on" : "date",
-               "filing_type" : "string",
-               "insolvency_case_number" : "integer",
-               "links" : {
-                  "filing" : "string",
-                  "insolvency_case" : "string"
-               },
-               "transaction_id" : "integer"
-            }
-         ]
-      }
-   ],
-   "part_satisfied_count" : "integer",
-   "satisfied_count" : "integer",
-   "total_count" : "integer",
-   "unfiletered_count" : "integer"
-}
- */
+    /**
+     * @var string
+     */
+    private $etag;
+    /**
+     * @var array
+     */
+    private $items;
+    /**
+     * @var int
+     */
+    private $partSatisfiedCount;
+    /**
+     * @var int
+     */
+    private $satisfiedCount;
+    /**
+     * @var int
+     */
+    private $totalCount;
+    /**
+     * @var int
+     */
+    private $unfileteredCount;
+
+    /**
+     * ChargeList constructor.
+     * @param array $jsonResponse
+     */
+    public function __construct(array $jsonResponse) {
+        $this->etag = $jsonResponse['etag'];
+        $this->partSatisfiedCount = $jsonResponse['part_satisfied_count'];
+        $this->satisfiedCount = $jsonResponse['satisfied_count'];
+        $this->totalCount = $jsonResponse['total_count'];
+        $this->unfileteredCount = $jsonResponse['unfiletered_count'];
+        foreach ($jsonResponse['items'] as $item) {
+            $this->items[] = new ChargeDetails($item);
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getEtag(): string
+    {
+        return $this->etag;
+    }
+
+    /**
+     * @return array
+     */
+    public function getItems(): array
+    {
+        return $this->items;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPartSatisfiedCount(): int
+    {
+        return $this->partSatisfiedCount;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSatisfiedCount(): int
+    {
+        return $this->satisfiedCount;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotalCount(): int
+    {
+        return $this->totalCount;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUnfilteredCount(): int
+    {
+        return $this->unfileteredCount;
+    }
 }

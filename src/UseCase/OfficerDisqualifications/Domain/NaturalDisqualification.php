@@ -3,64 +3,171 @@ namespace CH\UseCase\OfficerDisqualifications\Domain;
 
 class NaturalDisqualification
 {
-/*
-{
-   "date_of_birth" : "date",
-   "disqualifications" : [
-      {
-         "address" : {
-            "address_line_1" : "string",
-            "address_line_2" : "string",
-            "country" : "string",
-            "locality" : "string",
-            "postal_code" : "string",
-            "premises" : "string",
-            "region" : "string"
-         },
-         "case_identifier" : "string",
-         "company_names" : [
-            "string"
-         ],
-         "court_name" : "string",
-         "disqualification_type" : "string",
-         "disqualified_from" : "date",
-         "disqualified_until" : "date",
-         "heard_on" : "date",
-         "last_variation" : {
-            "case_identifier" : "string",
-            "court_name" : "string",
-            "varied_on" : "date"
-         },
-         "reason" : {
-            "act" : "string",
-            "article" : "string",
-            "description_identifier" : "string",
-            "section" : "string"
-         },
-         "undertaken_on" : "date"
-      }
-   ],
-   "etag" : "string",
-   "forename" : "string",
-   "honours" : "string",
-   "kind" : "string",
-   "links" : {
-      "self" : "string"
-   },
-   "nationality" : "string",
-   "other_forenames" : "string",
-   "permissions_to_act" : [
-      {
-         "company_names" : [
-            "string"
-         ],
-         "court_name" : "string",
-         "expires_on" : "date",
-         "granted_on" : "date"
-      }
-   ],
-   "surname" : "string",
-   "title" : "string"
-}
- */
+    /**
+     * @var Disqualification[]
+     */
+    private $disqualifications;
+    /**
+     * @var Permission[]
+     */
+    private $permissionsToAct;
+    /**
+     * @var string
+     */
+    private $title;
+    /**
+     * @var string
+     */
+    private $surname;
+    /**
+     * @var string
+     */
+    private $otherForenames;
+    /**
+     * @var string
+     */
+    private $nationality;
+    /**
+     * @var array
+     */
+    private $links;
+    /**
+     * @var string
+     */
+    private $kind;
+    /**
+     * @var string
+     */
+    private $honours;
+    /**
+     * @var string
+     */
+    private $forename;
+    /**
+     * @var string
+     */
+    private $etag;
+    /**
+     * @var string
+     */
+    private $dateOfBirth;
+
+    public function __construct(array $jsonResponse)
+    {
+        $this->dateOfBirth = $jsonResponse['date_of_birth'];
+        $this->etag = $jsonResponse['etag'];
+        $this->forename = $jsonResponse['forename'];
+        $this->honours = $jsonResponse['honours'];
+        $this->kind = $jsonResponse['kind'];
+        $this->links = $jsonResponse['links'];
+        $this->nationality = $jsonResponse['nationality'];
+        $this->otherForenames = $jsonResponse['other_forenames'];
+        $this->surname = $jsonResponse['surname'];
+        $this->title = $jsonResponse['title'];
+        $this->permissionsToAct = [];
+        foreach ($jsonResponse['permissions_to_act'] as $permission) {
+            $this->permissionsToAct[] = new Permission($jsonResponse['permissions_to_act']);
+
+        }
+        $this->disqualifications = [];
+        foreach ($jsonResponse['disqualifications'] as $disqualification) {
+            $this->disqualifications[] = new Disqualification($disqualification);
+        }
+    }
+
+    /**
+     * @return Disqualification[]
+     */
+    public function getDisqualifications(): array
+    {
+        return $this->disqualifications;
+    }
+
+    /**
+     * @return Permission[]
+     */
+    public function getPermissionsToAct(): array
+    {
+        return $this->permissionsToAct;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSurname(): string
+    {
+        return $this->surname;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOtherForenames(): string
+    {
+        return $this->otherForenames;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNationality(): string
+    {
+        return $this->nationality;
+    }
+
+    /**
+     * @return array
+     */
+    public function getLinks(): array
+    {
+        return $this->links;
+    }
+
+    /**
+     * @return string
+     */
+    public function getKind(): string
+    {
+        return $this->kind;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHonours(): string
+    {
+        return $this->honours;
+    }
+
+    /**
+     * @return string
+     */
+    public function getForename(): string
+    {
+        return $this->forename;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEtag(): string
+    {
+        return $this->etag;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDateOfBirth(): string
+    {
+        return $this->dateOfBirth;
+    }
 }

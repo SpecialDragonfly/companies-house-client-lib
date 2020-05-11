@@ -2,6 +2,7 @@
 namespace CH\UseCase\EstablishmentCompaniesUk;
 
 use CH\Service;
+use CH\UseCase\EstablishmentCompaniesUk\Domain\CompanyUkEstablishments;
 
 class EstablishmentCompaniesUkService
 {
@@ -15,8 +16,13 @@ class EstablishmentCompaniesUkService
         $this->service = $service;
     }
 
-    public function list()
+    public function list(string $companyNumber) : CompanyUkEstablishments
     {
-        $this->service->send('/company/{company_number}/uk-establishments', []);
+        return new CompanyUkEstablishments(
+            $this->service->send(
+                '/company/' . $companyNumber . '/uk-establishments',
+                []
+            )
+        );
     }
 }

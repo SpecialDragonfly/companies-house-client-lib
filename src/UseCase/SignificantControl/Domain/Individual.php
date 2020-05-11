@@ -1,46 +1,63 @@
 <?php
 namespace CH\UseCase\SignificantControl\Domain;
 
-class Individual
+class Individual extends Significant
 {
-/*
-{
-   "address" : {
-      "address_line_1" : "string",
-      "address_line_2" : "string",
-      "care_of" : "string",
-      "country" : "string",
-      "locality" : "string",
-      "po_box" : "string",
-      "postal_code" : "string",
-      "premises" : "string",
-      "region" : "string"
-   },
-   "ceased_on" : "date",
-   "country_of_residence" : "string",
-   "date_of_birth" : {
-      "day" : "integer",
-      "month" : "integer",
-      "year" : "integer"
-   },
-   "etag" : "string",
-   "kind" : "string",
-   "links" : {
-      "self" : "string",
-      "statement" : "string"
-   },
-   "name" : "string",
-   "name_elements" : {
-      "forename" : "string",
-      "other_forenames" : "string",
-      "surname" : "string",
-      "title" : "string"
-   },
-   "nationality" : "string",
-   "natures_of_control" : [
-      "string"
-   ],
-   "notified_on" : "date"
-}
- */
+    /**
+     * @var string
+     */
+    private $nationality;
+    /**
+     * @var array<string, string> Keys: {forename, other_forenames, surname, title}
+     */
+    private $nameElements;
+    /**
+     * @var array<string, string> Keys: {day, month, year}
+     */
+    private $dateOfBirth;
+    /**
+     * @var string
+     */
+    private $countryOfResidence;
+
+    public function __construct(array $jsonResponse)
+    {
+        $this->countryOfResidence = $jsonResponse['country_of_residence'];
+        $this->dateOfBirth = $jsonResponse['date_of_birth'];
+        $this->nameElements = $jsonResponse['name_elements'];
+        $this->nationality = $jsonResponse['nationality'];
+        parent::__construct($jsonResponse);
+    }
+
+    /**
+     * @return string
+     */
+    public function getNationality(): string
+    {
+        return $this->nationality;
+    }
+
+    /**
+     * @return array
+     */
+    public function getNameElements(): array
+    {
+        return $this->nameElements;
+    }
+
+    /**
+     * @return array
+     */
+    public function getDateOfBirth(): array
+    {
+        return $this->dateOfBirth;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCountryOfResidence(): string
+    {
+        return $this->countryOfResidence;
+    }
 }

@@ -2,6 +2,7 @@
 namespace CH\UseCase\Insolvency;
 
 use CH\Service;
+use CH\UseCase\Insolvency\Domain\CompanyInsolvency;
 
 class InsolvencyService
 {
@@ -15,8 +16,8 @@ class InsolvencyService
         $this->service = $service;
     }
 
-    public function get(string $companyNumber)
+    public function get(string $companyNumber) : CompanyInsolvency
     {
-        $this->service->send('/company/'.$companyNumber.'/insolvency', []);
+        return new CompanyInsolvency($this->service->send('/company/'.$companyNumber.'/insolvency', []));
     }
 }

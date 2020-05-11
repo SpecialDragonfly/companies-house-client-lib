@@ -18,6 +18,6 @@ class CompanyRegistersService
 
     public function get(string $companyNumber) : CompanyRegister
     {
-        $this->service->send('/company/'.$companyNumber.'/registers', []);
+        return new CompanyRegister($this->service->send('/company/'.$companyNumber.'/registers', []));
     }
 }

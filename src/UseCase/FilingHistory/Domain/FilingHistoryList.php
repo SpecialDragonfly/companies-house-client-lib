@@ -3,70 +3,102 @@ namespace CH\UseCase\FilingHistory\Domain;
 
 class FilingHistoryList
 {
-/*
-{
-   "etag" : "string",
-   "filing_history_status" : "string",
-   "items" : [
-      {
-         "annotations" : [
-            {
-               "annotation" : "string",
-               "category" : "string",
-               "date" : "date",
-               "description" : "string",
-               "description_values" : {
-                  "<key>" : "<value>"
-               },
-               "type" : "string"
-            }
-         ],
-         "associated_filings" : [
-            {
-               "category" : "string",
-               "date" : "date",
-               "description" : "string",
-               "description_values" : {
-                  "<key>" : "<value>"
-               },
-               "type" : "string"
-            }
-         ],
-         "barcode" : "string",
-         "category" : "string",
-         "date" : "date",
-         "description" : "string",
-         "description_values" : {
-            "<key>" : "<value>"
-         },
-         "links" : {
-            "document_metadata" : "string",
-            "self" : "string"
-         },
-         "pages" : "integer",
-         "paper_filed" : "boolean",
-         "resolutions" : [
-            {
-               "category" : "string",
-               "description" : "string",
-               "description_values" : {
-                  "<key>" : "<value>"
-               },
-               "document_id" : "string",
-               "receive_date" : "date",
-               "subcategory" : "string",
-               "type" : "string"
-            }
-         ],
-         "subcategory" : "string",
-         "transaction_id" : "string",
-         "type" : "string"
-      }
-   ],
-   "items_per_page" : "integer",
-   "kind" : "string",
-   "start_index" : "integer",
-   "total_count" : "integer"
-}
- */
+    /**
+     * @var string
+     */
+    private $etag;
+    /**
+     * @var string
+     */
+    private $filingHistoryStatus;
+    /**
+     * @var array
+     */
+    private $items;
+    /**
+     * @var int
+     */
+    private $itemsPerPage;
+    /**
+     * @var string
+     */
+    private $kind;
+    /**
+     * @var int
+     */
+    private $startIndex;
+    /**
+     * @var int
+     */
+    private $totalCount;
+
+    public function __construct(array $jsonResponse)
+    {
+        $this->etag = $jsonResponse['etag'];
+        $this->filingHistoryStatus = $jsonResponse['filing_history_status'];
+        $this->items = [];
+        foreach ($jsonResponse['items'] as $item) {
+            $this->items[] = new FilingHistoryItem($item);
+        }
+        $this->itemsPerPage = (int) $jsonResponse['items_per_page'];
+        $this->kind = $jsonResponse['kind'];
+        $this->startIndex = (int) $jsonResponse['start_index'];
+        $this->totalCount = (int) $jsonResponse['total_count'];
+    }
+
+    /**
+     * @return string
+     */
+    public function getEtag(): string
+    {
+        return $this->etag;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFilingHistoryStatus(): string
+    {
+        return $this->filingHistoryStatus;
+    }
+
+    /**
+     * @return FilingHistoryItem[]
+     */
+    public function getItems(): array
+    {
+        return $this->items;
+    }
+
+    /**
+     * @return int
+     */
+    public function getItemsPerPage(): int
+    {
+        return $this->itemsPerPage;
+    }
+
+    /**
+     * @return string
+     */
+    public function getKind(): string
+    {
+        return $this->kind;
+    }
+
+    /**
+     * @return int
+     */
+    public function getStartIndex(): int
+    {
+        return $this->startIndex;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotalCount(): int
+    {
+        return $this->totalCount;
+    }
 }

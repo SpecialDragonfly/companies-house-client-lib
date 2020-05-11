@@ -3,74 +3,24 @@ namespace CH\UseCase\OfficerAppointment\Domain;
 
 class AppointmentList
 {
-/*
-{
-   "date_of_birth" : {
-      "month" : "integer",
-      "year" : "integer"
-   },
-   "etag" : "string",
-   "is_corporate_officer" : "boolean",
-   "items" : [
-      {
-         "address" : {
-            "address_line_1" : "string",
-            "address_line_2" : "string",
-            "care_of" : "string",
-            "country" : "string",
-            "locality" : "string",
-            "po_box" : "string",
-            "postal_code" : "string",
-            "premises" : "string",
-            "region" : "string"
-         },
-         "appointed_before" : "date",
-         "appointed_on" : "date",
-         "appointed_to" : {
-            "company_name" : "string",
-            "company_number" : "string",
-            "company_status" : "string"
-         },
-         "country_of_residence" : "string",
-         "former_names" : [
-            {
-               "forenames" : "string",
-               "surname" : "string"
-            }
-         ],
-         "identification" : {
-            "identification_type" : "string",
-            "legal_authority" : "string",
-            "legal_form" : "string",
-            "place_registered" : "string",
-            "registration_number" : "string"
-         },
-         "is_pre_1992_appointment" : "boolean",
-         "links" : {
-            "company" : "string"
-         },
-         "name" : "string",
-         "name_elements" : {
-            "forename" : "string",
-            "honours" : "string",
-            "other_forenames" : "string",
-            "surname" : "string",
-            "title" : "string"
-         },
-         "nationality" : "string",
-         "occupation" : "string",
-         "officer_role" : "string",
-         "resigned_on" : "date"
-      }
-   ],
-   "items_per_page" : "integer",
-   "kind" : "string",
-   "links" : {
-      "self" : "string"
-   },
-   "name" : "string",
-   "start_index" : "integer",
-   "total_results" : "integer"
-}
- */
+    public function __construct(array $jsonResponse)
+    {
+        $this->dateOfBirth = $jsonResponse['date_of_birth'];
+        $this->etag = $jsonResponse['etag'];
+        $this->isCorporateOfficer = (bool) $jsonResponse['is_corporate_officer'];
+        $this->itemsPerPage = (int) $jsonResponse['items_per_page'];
+        $this->kind = $jsonResponse['kind'];
+        $this->links = $jsonResponse['links'];
+        $this->name = $jsonResponse['name'];
+        $this->startIndex = (int) $jsonResponse['start_index'];
+        $this->totalResults = (int) $jsonResponse['total_results'];
+        $this->items = [];
+        foreach ($jsonResponse['items'] as $item) {
+            $this->items[] = new Appointment($item);
+        }
+    }
+    /*
+    {
+    }
+     */
 }

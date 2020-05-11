@@ -3,60 +3,118 @@ namespace CH\UseCase\OfficerDisqualifications\Domain;
 
 class CorporateDisqualification
 {
-/*
-{
-   "company_number" : "string",
-   "country_of_registration" : "string",
-   "disqualifications" : [
-      {
-         "address" : {
-            "address_line_1" : "string",
-            "address_line_2" : "string",
-            "country" : "string",
-            "locality" : "string",
-            "postal_code" : "string",
-            "premises" : "string",
-            "region" : "string"
-         },
-         "case_identifier" : "string",
-         "company_names" : [
-            "string"
-         ],
-         "court_name" : "string",
-         "disqualification_type" : "string",
-         "disqualified_from" : "date",
-         "disqualified_until" : "date",
-         "heard_on" : "date",
-         "last_variation" : {
-            "case_identifier" : "string",
-            "court_name" : "string",
-            "varied_on" : "date"
-         },
-         "reason" : {
-            "act" : "string",
-            "article" : "string",
-            "description_identifier" : "string",
-            "section" : "string"
-         },
-         "undertaken_on" : "date"
-      }
-   ],
-   "etag" : "string",
-   "kind" : "string",
-   "links" : {
-      "self" : "string"
-   },
-   "name" : "string",
-   "permissions_to_act" : [
-      {
-         "company_names" : [
-            "string"
-         ],
-         "court_name" : "string",
-         "expires_on" : "date",
-         "granted_on" : "date"
-      }
-   ]
-}
- */
+    /**
+     * @var Disqualification[]
+     */
+    private $disqualifications;
+    /**
+     * @var Permission[]
+     */
+    private $permissionsToAct;
+    /**
+     * @var string
+     */
+    private $name;
+    /**
+     * @var array
+     */
+    private $links;
+    /**
+     * @var string
+     */
+    private $kind;
+    /**
+     * @var string
+     */
+    private $etag;
+    /**
+     * @var string
+     */
+    private $companyOfRegistration;
+    /**
+     * @var string
+     */
+    private $companyNumber;
+
+    public function __construct(array $jsonResponse)
+    {
+        $this->companyNumber = $jsonResponse['company_number'];
+        $this->companyOfRegistration = $jsonResponse['country_of_registration'];
+        $this->etag = $jsonResponse['etag'];
+        $this->kind = $jsonResponse['kind'];
+        $this->links = $jsonResponse['links'];
+        $this->name = $jsonResponse['name'];
+        $this->permissionsToAct = [];
+        foreach ($jsonResponse['permissions_to_act'] as $permission) {
+            $this->permissionsToAct[] = new Permission($permission);
+        }
+        $this->disqualifications = [];
+        foreach ($jsonResponse['disqualifications'] as $disqualification) {
+            $this->disqualifications[] = new Disqualification($disqualification);
+        }
+    }
+
+    /**
+     * @return Disqualification[]
+     */
+    public function getDisqualifications(): array
+    {
+        return $this->disqualifications;
+    }
+
+    /**
+     * @return Permission[]
+     */
+    public function getPermissionsToAct(): array
+    {
+        return $this->permissionsToAct;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return array
+     */
+    public function getLinks(): array
+    {
+        return $this->links;
+    }
+
+    /**
+     * @return string
+     */
+    public function getKind(): string
+    {
+        return $this->kind;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEtag(): string
+    {
+        return $this->etag;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCompanyOfRegistration(): string
+    {
+        return $this->companyOfRegistration;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCompanyNumber(): string
+    {
+        return $this->companyNumber;
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace CH\UseCase\SignificantControl;
 
 use CH\Service;
@@ -22,38 +23,73 @@ class SignificantControlService
         $this->service = $service;
     }
 
-    public function getCorporate(string $companyNumber, string $pscId) : CorporateEntity
+    public function getCorporate(string $companyNumber, string $pscId): CorporateEntity
     {
-        $this->service->send('/company/{company_number}/persons-with-significant-control/corporate-entity/{psc_id}', []);
+        return new CorporateEntity(
+            $this->service->send(
+                '/company/' . $companyNumber . '/persons-with-significant-control/corporate-entity/' . $pscId,
+                []
+            )
+        );
     }
 
-    public function getIndividual(string $companyNumber, string $pscId) : Individual
+    public function getIndividual(string $companyNumber, string $pscId): Individual
     {
-        $this->service->send('/company/{company_number}/persons-with-significant-control/individual/{psc_id}', []);
+        return new Individual(
+            $this->service->send(
+                '/company/' . $companyNumber . '/persons-with-significant-control/individual/' . $pscId,
+                []
+            )
+        );
     }
 
-    public function getLegal(string $companyNumber, string $pscId) : LegalPerson
+    public function getLegal(string $companyNumber, string $pscId): LegalPerson
     {
-        $this->service->send('/company/{company_number}/persons-with-significant-control/legal-person/{psc_id}', []);
+        return new LegalPerson(
+            $this->service->send(
+                '/company/' . $companyNumber . '/persons-with-significant-control/legal-person/' . $pscId,
+                []
+            )
+        );
     }
 
-    public function getStatement(string $companyNumber, string $statementId) : Statement
+    public function getStatement(string $companyNumber, string $statementId): Statement
     {
-        $this->service->send('/company/{company_number}/persons-with-significant-control-statements/{statement_id}', []);
+        return new Statement(
+            $this->service->send(
+                '/company/' . $companyNumber . '/persons-with-significant-control-statements/' . $statementId,
+                []
+            )
+        );
     }
 
-    public function getSuperSecurePerson(string $companyNumber, string $superSecureId) : SuperSecure
+    public function getSuperSecurePerson(string $companyNumber, string $superSecureId): SuperSecure
     {
-        $this->service->send('/company/{company_number}/persons-with-significant-control/super-secure/{super_secure_id}', []);
+        return new SuperSecure(
+            $this->service->send(
+                '/company/' . $companyNumber . '/persons-with-significant-control/super-secure/' . $superSecureId,
+                []
+            )
+        );
     }
 
-    public function listAll(string $companyNumber) : PersonList
+    public function listAll(string $companyNumber): PersonList
     {
-        $this->service->send('/company/{company_number}/persons-with-significant-control', []);
+        return new PersonList(
+            $this->service->send(
+                '/company/' . $companyNumber . '/persons-with-significant-control',
+                []
+            )
+        );
     }
 
-    public function listStatements(string $companyNumber) : StatementList
+    public function listStatements(string $companyNumber): StatementList
     {
-        $this->service->send('/company/{company_number}/persons-with-significant-control-statements', []);
+        return new StatementList(
+            $this->service->send(
+                '/company/' . $companyNumber . '/persons-with-significant-control-statements',
+                []
+            )
+        );
     }
 }

@@ -3,46 +3,50 @@ namespace CH\UseCase\Insolvency\Domain;
 
 class CompanyInsolvency
 {
-/*
-{
-   "cases" : [
-      {
-         "dates" : [
-            {
-               "date" : "date",
-               "type" : "string"
-            }
-         ],
-         "links" : {
-            "charge" : "string"
-         },
-         "notes" : [
-            "string"
-         ],
-         "number" : "integer",
-         "practitioners" : [
-            {
-               "address" : {
-                  "address_line_1" : "string",
-                  "address_line_2" : "string",
-                  "country" : "string",
-                  "locality" : "string",
-                  "postal_code" : "string",
-                  "region" : "string"
-               },
-               "appointed_on" : "date",
-               "ceased_to_act_on" : "date",
-               "name" : "string",
-               "role" : "string"
-            }
-         ],
-         "type" : "string"
-      }
-   ],
-   "etag" : "string",
-   "status" : [
-      null
-   ]
-}
- */
+    /**
+     * @var string
+     */
+    private $etag;
+    /**
+     * @var string[]
+     */
+    private $status;
+    /**
+     * @var InsolvencyCase[]
+     */
+    private $cases;
+
+    public function __construct(array $jsonResponse)
+    {
+        $this->etag = $jsonResponse['etag'];
+        $this->status = $jsonResponse['status'];
+        $this->cases = [];
+        foreach ($jsonResponse['cases'] as $case) {
+            $this->cases[] = new InsolvencyCase($case);
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getEtag(): string
+    {
+        return $this->etag;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getStatus(): array
+    {
+        return $this->status;
+    }
+
+    /**
+     * @return InsolvencyCase[]
+     */
+    public function getCases(): array
+    {
+        return $this->cases;
+    }
 }

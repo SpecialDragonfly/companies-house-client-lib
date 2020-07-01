@@ -11,6 +11,9 @@ class CompanyOfficersService
     const REGISTER_TYPE_DIRECTORS = 'directors';
     const REGISTER_TYPE_SECRETARIES = 'secretaries';
     const REGISTER_TYPE_LLP_MEMBERS = 'llp-members';
+    const ORDER_BY_APPOINTED_ON = 'appointed_on';
+    const ORDER_BY_RESIGNED_ON = 'resigned_on';
+    const ORDER_BY_SURNAME = 'surname';
 
     /**
      * @var Service
@@ -48,7 +51,9 @@ class CompanyOfficersService
             $options['register_type'] = $registerType;
             $options['register_view'] = 'true';
         }
-        if ($orderBy !== null && in_array($orderBy, ['appointed_on', 'resigned_on', 'surname'])) {
+        if ($orderBy !== null &&
+            in_array($orderBy, [static::ORDER_BY_APPOINTED_ON, static::ORDER_BY_RESIGNED_ON, static::ORDER_BY_SURNAME])
+        ) {
             if ($orderDirection === static::ORDER_DESCENDING) {
                 $orderBy = '-'.$orderBy;
             }

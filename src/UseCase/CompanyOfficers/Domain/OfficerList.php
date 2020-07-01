@@ -67,4 +67,84 @@ class OfficerList
         }
         return $people;
     }
+
+    /**
+     * @return int
+     */
+    public function getTotalResults(): int
+    {
+        return $this->totalResults;
+    }
+
+    /**
+     * @return int
+     */
+    public function getStartIndex(): int
+    {
+        return $this->startIndex;
+    }
+
+    /**
+     * @return int
+     */
+    public function getResignedCount(): int
+    {
+        return $this->resignedCount;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLinks()
+    {
+        return $this->links;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getKind()
+    {
+        return $this->kind;
+    }
+
+    /**
+     * @return int
+     */
+    public function getItemsPerPage(): int
+    {
+        return $this->itemsPerPage;
+    }
+
+    /**
+     * @return int
+     */
+    public function getInactiveCount(): int
+    {
+        return $this->inactiveCount;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEtag()
+    {
+        return $this->etag;
+    }
+
+    /**
+     * @return int
+     */
+    public function getActiveCount(): int
+    {
+        return $this->activeCount;
+    }
+
+    /**
+     * @return Person[]
+     */
+    public function getOfficers() : array
+    {
+        return $this->people;
+    }
 }

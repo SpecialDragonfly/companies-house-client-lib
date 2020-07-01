@@ -1,5 +1,5 @@
 {
-    "name": "dominic/companies_house",
+    "name": "specialdragonfly/companies-house-client-lib",
     "description": "Client library for Companies House API",
     "license": "proprietary",
     "type": "library",

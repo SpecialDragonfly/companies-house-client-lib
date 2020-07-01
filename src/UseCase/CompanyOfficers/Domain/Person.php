@@ -83,6 +83,10 @@ class Person
      */
     private function parseFormerNames($formerNames) : array
     {
+        if ($formerNames === null) {
+            return [];
+        }
+
         $names = [];
         foreach ($formerNames as $formerName) {
             $names[] = new FormerName($formerName['forenames'], $formerName['surname']);

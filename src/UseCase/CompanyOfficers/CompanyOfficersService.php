@@ -3,6 +3,7 @@ namespace CH\UseCase\CompanyOfficers;
 
 use CH\Service;
 use CH\UseCase\CompanyOfficers\Domain\OfficerList;
+use Exception;
 
 class CompanyOfficersService
 {
@@ -25,6 +26,16 @@ class CompanyOfficersService
         $this->service = $service;
     }
 
+    /**
+     * @param string $companyNumber
+     * @param int $itemsPerPage
+     * @param string|null $registerType
+     * @param string|null $orderBy
+     * @param string $orderDirection
+     * @param int $startIndex
+     * @return OfficerList
+     * @throws Exception
+     */
     public function list(
         string $companyNumber,
         int $itemsPerPage,
@@ -59,6 +70,11 @@ class CompanyOfficersService
             }
             $options['order_by'] = $orderBy;
         }
-        return new OfficerList($this->service->send('/company/'.$companyNumber.'/officers', $options));
+        try {
+            $data = $this->service->send('/company/' . $companyNumber . '/officers', $options);
+            return new OfficerList($data);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
+        }
     }
 }

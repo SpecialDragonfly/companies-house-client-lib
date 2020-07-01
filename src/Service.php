@@ -27,11 +27,11 @@ final class Service
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_USERPWD, $this->apiKey . ':');
         $result = curl_exec($ch);
+        $info = (int) curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
         curl_close($ch);
         if ($result === false) {
             throw new \Exception("cURL error: ".curl_error($ch));
         }
-        $info = (int) curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
         if ($info === 429) {
             throw new \Exception("Too many requests within 5 minute period. Capped at 600.");
         }

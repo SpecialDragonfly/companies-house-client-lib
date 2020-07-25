@@ -54,73 +54,73 @@ class Address
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getAddressLineOne(): string
+    public function getAddressLineOne(): ?string
     {
         return $this->addressLineOne;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getAddressLineTwo(): string
+    public function getAddressLineTwo(): ?string
     {
         return $this->addressLineTwo;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getCareOf(): string
+    public function getCareOf(): ?string
     {
         return $this->careOf;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getCountry(): string
+    public function getCountry(): ?string
     {
         return $this->country;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getLocality(): string
+    public function getLocality(): ?string
     {
         return $this->locality;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getPoBox(): string
+    public function getPoBox(): ?string
     {
         return $this->poBox;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getPostalCode(): string
+    public function getPostalCode(): ?string
     {
         return $this->postalCode;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getPremises(): string
+    public function getPremises(): ?string
     {
         return $this->premises;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getRegion(): string
+    public function getRegion(): ?string
     {
         return $this->region;
     }

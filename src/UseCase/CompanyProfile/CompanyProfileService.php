@@ -1,5 +1,5 @@
 <?php
-namespace CH\UseCase;
+namespace CH\UseCase\CompanyProfile;
 
 use CH\Service;
 use CH\UseCase\CompanyProfile\Domain\CompanyProfile;

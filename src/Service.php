@@ -1,7 +1,7 @@
 <?php
 namespace CH;
 
-final class Service
+class Service
 {
     const API_ENDPOINT = 'https://api.companieshouse.gov.uk';
 
